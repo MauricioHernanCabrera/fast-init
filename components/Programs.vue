@@ -1,21 +1,30 @@
 <template lang="pug">
   .Programs
-    .Program-item(v-for="program in 10" :key="program")
+    .Program-item(v-for="program in programs" :key="program._id")
       .Program-content
-        h4 Geco 
-        //- {{program.name}}
-        p c://asdasd/asd/asdasdas/dasd.png
+        h4 {{program.name}}
+        p {{program.url}}
       
       .Program-actions
-        button
+        button(@click="SET_DIALOG({ title: 'Edit program', nameBtnSubmit: 'Edit', active: 'create-or-update', data: program })")
           i.fas.fa-pen
 
-        button
+        button(@click="SET_DIALOG({ title: 'Delete program', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: program._id, name: program.name } })")
           i.fas.fa-trash-alt
 </template>
 
 <script>
-export default {}
+import { mapState, mapMutations } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState(['programs'])
+  },
+
+  methods: {
+    ...mapMutations(['SET_DIALOG', 'CANCEL_DIALOG'])
+  }
+}
 </script>
 
 <style lang="scss" scoped>

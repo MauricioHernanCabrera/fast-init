@@ -9,7 +9,6 @@
   )
     template(v-if="value")
       FIInput(v-model="form.name" placeholder="Name (*)" autofocus)
-      FIInput(v-model="form.url" placeholder="Url (*)")
 
 </template>
 
@@ -24,16 +23,14 @@ export default {
 
   validations: {
     form: {
-      name: { required },
-      url: { required }
+      name: { required }
     }
   },
 
   data() {
     return {
       DEFAULT_FORM: {
-        name: '',
-        url: ''
+        name: ''
       }
     }
   }

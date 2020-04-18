@@ -1,9 +1,22 @@
 <template lang="pug">
-  input.Input()
+  input.Input(:value="value" @input="update" )
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    value: {
+      type: String,
+      required: true
+    }
+  },
+
+  methods: {
+    update(event) {
+      this.$emit('input', event.target.value)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -13,9 +26,9 @@ export default {}
   width: 100%;
   border: 0;
   border-bottom: 2px solid $color_grey2;
-  font-size: 16px;
-  padding: 12px 0;
-  margin-bottom: 8px;
+  font-size: 14px;
+  padding: 16px 0;
+  margin-bottom: 12px;
   outline: 0;
   transition: 0.1s;
 

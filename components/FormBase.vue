@@ -5,7 +5,7 @@
 
       .Form-actions
         button.Form-btn-close(type="reset" @click="$emit('input', !value)") Close
-        button.Form-btn-submit(type="submit" :disabled="disabled") {{ btnNameSubmit }}
+        button.Form-btn-submit(type="submit" :disabled="disabled") {{ nameBtnSubmit }}
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
       required: true
     },
 
-    btnNameSubmit: {
+    nameBtnSubmit: {
       type: String,
       default: 'Accept'
     }
@@ -54,12 +54,14 @@ export default {
     margin-top: 24px;
     display: flex;
     justify-content: flex-end;
+
     button {
       font-size: 12px;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 500;
       padding: 8px 16px;
       color: inherit;
+      transition: 0.3s;
 
       &.Form-btn-close {
         margin-right: 6px;

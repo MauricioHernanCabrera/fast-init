@@ -1,26 +1,39 @@
 <template lang="pug">
   .Projects
-    .Project-item(v-for="project in 10" :key="project")
-      .Project-link(@click="$router.push('/commands')")
+    .Project-item(v-for="project in getProjects" :key="project._id")
+      .Project-link(@click="navigateAndFillStore(project)")
 
       .Project-content
-        h4 Geco 
-        //- {{project.name}}
+        h4 {{project.name}} 
         ul.Project-commands
-          li.Project-command-item( v-for="command in 11" :key="command")
-            | chrome
+          li.Project-command-item( v-for="command in project.commands" :key="command._id")
+            | {{command.program.name}}
         //- {{project.url}}
       
       .Project-actions
-        button
+        button(@click="SET_DIALOG({ title: 'Edit project', nameBtnSubmit: 'Edit', active: 'create-or-update', data: project })")
           i.fas.fa-pen
 
-        button
+        button(@click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: project._id, name: project.name } })")
           i.fas.fa-trash-alt
 </template>
 
 <script>
-export default {}
+import { mapMutations, mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters(['getProjects'])
+  },
+
+  methods: {
+    ...mapMutations(['SET_DIALOG', 'CANCEL_DIALOG', 'SET_PROJECT']),
+
+    navigateAndFillStore(project) {
+      this.SET_PROJECT(project)
+      this.$router.push('/commands')
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

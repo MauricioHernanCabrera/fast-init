@@ -38,6 +38,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    height: 100%;
 
     .Toolbar-title {
       font-size: 16px;
@@ -54,12 +55,17 @@ export default {
     }
 
     .Toolbar-items {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
       button {
         color: $color_light;
         display: flex;
         align-items: center;
         font-size: 16px;
         font-weight: 700;
+        height: 100%;
 
         i {
           font-size: 14px;

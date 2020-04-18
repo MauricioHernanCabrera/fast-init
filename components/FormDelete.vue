@@ -4,12 +4,11 @@
     :value="value"
     :nameBtnSubmit="nameBtnSubmit"
     @input="handleInput"
-    :disabled="$v.$invalid"
+    :disabled="false"
     @submit="submit"
   )
     template(v-if="value")
       FIInput(v-model="form.name" placeholder="Name (*)" autofocus)
-      FIInput(v-model="form.url" placeholder="Url (*)")
 
 </template>
 
@@ -20,21 +19,14 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   components: { FIInput },
 
+  validations: {},
+
   mixins: [utilsFormBase],
 
-  validations: {
-    form: {
-      name: { required },
-      url: { required }
-    }
-  },
-
-  data() {
-    return {
-      DEFAULT_FORM: {
-        name: '',
-        url: ''
-      }
+  methods: {
+    submit() {
+      this.$emit('submit', this.data)
+      this.$emit('input', !this.value)
     }
   }
 }

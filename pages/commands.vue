@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    Toolbar(title="Commands")
+    Toolbar(:title="`Commands of ${project.name}`")
       template(slot="toolbar-items")
         button
           i.fas.fa-plus
@@ -10,15 +10,20 @@
 </template>
 
 <script>
-import Toolbar from '~/components/Toolbar'
-import Card from '~/components/Card'
-import Commands from '~/components/Commands'
+import Toolbar from '@/components/Toolbar'
+import Card from '@/components/Card'
+import Commands from '@/components/Commands'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     Toolbar,
     Card,
     Commands
+  },
+
+  computed: {
+    ...mapState(['project'])
   }
 }
 </script>
