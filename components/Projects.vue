@@ -8,19 +8,35 @@
         ul.Project-commands
           li.Project-command-item( v-for="command in project.commands" :key="command._id" v-if="command.program")
             | {{command.program.name}}
-        //- {{project.url}}
       
       .Project-actions
-        button(@click="SET_DIALOG({ title: 'Edit project', nameBtnSubmit: 'Edit', active: 'create-or-update', data: project })")
+        button(title="copy clipboard" @click="copyClipboard(project.commands)")
+          i.fas.fa-clipboard
+
+        button(title="edit project" @click="SET_DIALOG({ title: 'Edit project', nameBtnSubmit: 'Edit', active: 'create-or-update', data: project })")
           i.fas.fa-pen
 
-        button(@click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: project._id, name: project.name } })")
+        button(title="remove project" @click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: project._id, name: project.name } })")
           i.fas.fa-trash-alt
+
+    textarea(
+      style="z-index: -1; position: absolute; top: -1000%;"
+      v-model="clipboard"
+      ref="customNotesClipboard"
+      cols="30"
+      rows="10")
+    
 </template>
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 export default {
+  data() {
+    return {
+      clipboard: 'asdsa'
+    }
+  },
+
   computed: {
     ...mapGetters(['getProjects'])
   },
@@ -44,6 +60,26 @@ export default {
           }))
       )
       this.$router.push('/commands')
+    },
+
+    copyClipboard(commands) {
+      const str = commands
+        .reduce((acum, command) => {
+          return `${acum} "${command.program.url}" ${
+            command.param && command.param.length != 0
+              ? `"${command.param}" &&`
+              : '&&'
+          } `
+        }, '')
+        .slice(1, -4)
+
+      const json = str
+      this.clipboard = json
+
+      this.$nextTick(() => {
+        this.$refs.customNotesClipboard.select()
+        document.execCommand('copy')
+      })
     }
   }
 }
@@ -117,7 +153,7 @@ export default {
     }
 
     .Project-actions {
-      flex: 0 0 72px;
+      flex: 0 0 108px;
       button {
         position: relative;
         z-index: 10;

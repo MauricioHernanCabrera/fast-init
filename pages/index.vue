@@ -67,7 +67,6 @@ export default {
     },
 
     deleteItem(item) {
-      console.log({ item })
       this.REMOVE_PROJECT(item)
     }
   }
