@@ -1,0 +1,20 @@
+$color_primary: #009ee0;
+$color_secondary: #feb500;
+$color_dark: #3d3c3c;
+$color_light: #ffffff;
+$color_grey: #f0f0f0;
+$color_grey2: #e0e0e0;
+$font1: 'Open Sans', sans-serif;
+
+$grid-bp: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+@mixin breakpoint($size) {
+  @media screen and (min-width: map-get($grid-bp, $size)) {
+    @content;
+  }
+}
