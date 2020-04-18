@@ -1,21 +1,30 @@
 <template lang="pug">
   .Commands
-    .Command-item(v-for="command in 10" :key="command")
+    .Command-item(v-for="command in getCommands" :key="command._id")
       .Command-content
-        h4 Geco 
-        //- {{command.name}}
-        p c://asdasd/asd/asdasdas/dasd.png
+        h4 {{command.program.name}} 
+        //- 
+        p {{command.param}}
       
       .Command-actions
-        button
+        button(@click="SET_DIALOG({ title: 'Edit command', nameBtnSubmit: 'Edit', active: 'create-or-update', data: { ...command, program: command.program._id } })")
           i.fas.fa-pen
 
-        button
+        button(@click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: command._id, name: command.program.name } })")
           i.fas.fa-trash-alt
 </template>
 
 <script>
-export default {}
+import { mapState, mapGetters, mapMutations } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters(['getCommands'])
+  },
+
+  methods: {
+    ...mapMutations(['SET_DIALOG', 'CANCEL_DIALOG'])
+  }
+}
 </script>
 
 <style lang="scss" scoped>

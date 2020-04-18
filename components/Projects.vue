@@ -6,7 +6,7 @@
       .Project-content
         h4 {{project.name}} 
         ul.Project-commands
-          li.Project-command-item( v-for="command in project.commands" :key="command._id")
+          li.Project-command-item( v-for="command in project.commands" :key="command._id" v-if="command.program")
             | {{command.program.name}}
         //- {{project.url}}
       
@@ -26,10 +26,23 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['SET_DIALOG', 'CANCEL_DIALOG', 'SET_PROJECT']),
+    ...mapMutations([
+      'SET_DIALOG',
+      'CANCEL_DIALOG',
+      'SET_PROJECT',
+      'SET_COMMANDS'
+    ]),
 
-    navigateAndFillStore(project) {
+    navigateAndFillStore({ commands, ...project }) {
       this.SET_PROJECT(project)
+      this.SET_COMMANDS(
+        commands
+          .filter(command => command.program && command.program._id)
+          .map(command => ({
+            ...command,
+            program: command.program._id
+          }))
+      )
       this.$router.push('/commands')
     }
   }

@@ -1,35 +1,7 @@
 export const state = () => ({
-  programs: [
-    {
-      _id: 1,
-      name: 'Chrome',
-      url: `C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe`
-    },
-    {
-      _id: 2,
-      name: 'Slack',
-      url: `C:\\Users\\algui\\AppData\\Local\\slack\\slack.exe`
-    },
-    {
-      _id: 3,
-      name: 'Postman',
-      url: 'C:\\Users\\algui\\AppData\\Local\\Postman\\Postman.exe'
-    }
-  ],
+  programs: [],
 
-  projects: [
-    {
-      _id: 11,
-      name: 'GECO',
-      commands: [
-        {
-          _id: 22,
-          program: 1,
-          url: ''
-        }
-      ]
-    }
-  ],
+  projects: [],
 
   project: {},
 
@@ -51,6 +23,13 @@ export const getters = {
         ...command,
         program: state.programs.find(program => program._id == command.program)
       }))
+    }))
+  },
+
+  getCommands(state) {
+    return state.commands.map(command => ({
+      ...command,
+      program: state.programs.find(program => program._id == command.program)
     }))
   }
 }
@@ -74,6 +53,10 @@ export const mutations = {
     state.dialog.nameBtnSubmit = nameBtnSubmit
     state.dialog.title = title
     state.dialog.active = active
+  },
+
+  SET_PROGRAMS: (state, payload) => {
+    state.programs = payload
   },
 
   ADD_PROGRAM: (state, payload) => {
@@ -116,22 +99,47 @@ export const mutations = {
     const index = state.projects.findIndex(
       program => program._id == payload._id
     )
-    const oldItem = state.projects[index]
     const { commands, ...newItem } = payload
 
     state.projects.splice(index, 1, {
-      ...oldItem,
-      ...newItem
+      ...newItem,
+      commands: commands.map(command => ({
+        ...command,
+        program: command.program._id
+      }))
     })
   },
 
   SET_PROJECT: (state, payload) => {
     state.project = payload
-  }
-}
+  },
 
-export const actions = {
-  updateActionValue({ commit }) {
-    commit('updateValue', payload)
+  SET_PROJECTS: (state, payload) => {
+    state.projects = payload
+  },
+
+  SET_COMMANDS: (state, payload) => {
+    state.commands = payload
+  },
+
+  ADD_COMMAND: (state, payload) => {
+    state.commands.push({
+      ...payload,
+      _id: Date.now()
+    })
+  },
+
+  REMOVE_COMMAND: (state, payload) => {
+    const index = state.commands.findIndex(
+      program => program._id === payload._id
+    )
+    state.commands.splice(index, 1)
+  },
+
+  UPDATE_COMMAND: (state, payload) => {
+    const index = state.commands.findIndex(
+      program => program._id == payload._id
+    )
+    state.commands.splice(index, 1, payload)
   }
 }

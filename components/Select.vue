@@ -1,5 +1,9 @@
 <template lang="pug">
-  input.Input(:value="value" @input="update" )
+  select.Select(:value="value" @input="update" )
+    option(value="") {{placeholder}}
+    option(v-for="item in items" :key="item[itemValue]" :value="item[itemValue]")
+      | {{item[itemText]}}
+
 </template>
 
 <script>
@@ -8,6 +12,26 @@ export default {
     value: {
       type: [String, Number],
       required: true
+    },
+
+    items: {
+      type: Array,
+      default: []
+    },
+
+    placeholder: {
+      type: String,
+      default: ''
+    },
+
+    itemText: {
+      type: String,
+      default: 'text'
+    },
+
+    itemValue: {
+      type: String,
+      default: 'value'
     }
   },
 
@@ -22,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 @import './../assets/utils.scss';
 
-.Input {
+.Select {
   width: 100%;
   border: 0;
   border-bottom: 2px solid $color_grey2;

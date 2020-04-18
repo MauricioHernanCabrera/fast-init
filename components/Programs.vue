@@ -34,6 +34,7 @@ export default {
   background-color: $color_light;
 
   .Program-item {
+    word-break: break-all;
     border-bottom: 1px solid $color_grey2;
     padding: 16px;
     transition: 0.3s;
