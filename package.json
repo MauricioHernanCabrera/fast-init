@@ -1,7 +1,7 @@
 {
   "name": "fast-init",
   "version": "1.0.0",
-  "description": "My good Nuxt.js project",
+  "description": "Start all the programs that your projects need with a simple copy paste",
   "author": "Mauricio Hernan Cabrera",
   "private": true,
   "scripts": {
