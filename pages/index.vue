@@ -4,7 +4,7 @@
       template(slot="toolbar-items")
         button(@click="SET_DIALOG({ title: 'Create project', active: 'create-or-update' })")
           i.fas.fa-plus
-          | project
+          span project
     Card(title="Projects")
       Projects
     
@@ -45,7 +45,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['dialog'])
+    ...mapState(['dialog', 'projects'])
   },
 
   methods: {
@@ -60,6 +60,8 @@ export default {
     submitForm({ newValue, updateValue }) {
       if (newValue) {
         this.ADD_PROJECT(newValue)
+        const [projectCreated] = this.projects.slice(this.projects.length - 1)
+        this.$router.push(`/commands?project_id=${projectCreated._id}`)
       }
       if (updateValue) {
         this.UPDATE_PROJECT(updateValue)

@@ -13,8 +13,31 @@ $grid-bp: (
   xl: 1200px
 );
 
+/*
+  level 1 = 1000
+  level 2 = 100
+  level 3 = 10
+*/
+
+$z-index: (
+  loader: 10000,
+  modal: 1000,
+  modal-overlay: 1100,
+  modal-container: 1200,
+  toolbar: 100,
+  command-link: 5,
+  command-actions-button: 10,
+  project-link: 5,
+  project-actions-button: 10,
+  program-actions-button: 10
+);
+
 @mixin breakpoint($size) {
   @media screen and (min-width: map-get($grid-bp, $size)) {
     @content;
   }
+}
+
+@mixin z-index($key) {
+  z-index: map-get($z-index, $key);
 }

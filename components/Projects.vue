@@ -1,7 +1,11 @@
 <template lang="pug">
   .Projects
-    .Project-item(v-for="project in getProjects" :key="project._id")
-      .Project-link(@click="navigateAndFillStore(project)")
+    .Project-item(v-if="getProjects.length == 0")
+      .Project-content
+        h4 There no projects
+      
+    .Project-item.hover(v-else v-for="project in getProjects" :key="project._id")
+      .Project-link(@click="$router.push(`/commands?project_id=${project._id}`)")
 
       .Project-content
         h4 {{project.name}} 
@@ -49,21 +53,12 @@ export default {
       'SET_COMMANDS'
     ]),
 
-    navigateAndFillStore({ commands, ...project }) {
-      this.SET_PROJECT(project)
-      this.SET_COMMANDS(
-        commands
-          .filter(command => command.program && command.program._id)
-          .map(command => ({
-            ...command,
-            program: command.program._id
-          }))
-      )
-      this.$router.push('/commands')
-    },
-
     copyClipboard(commands) {
-      const str = commands
+      const commandsFiltered = commands.filter(
+        command => command.program && command.program._id
+      )
+
+      const str = commandsFiltered
         .reduce((acum, command) => {
           return `${acum} "${command.program.url}" ${
             command.param && command.param.length != 0
@@ -99,20 +94,16 @@ export default {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    // flex-wrap: wrap;
 
-    &:last-child {
-      margin: 0;
-      border-bottom: 0;
-    }
+    &.hover {
+      &:hover {
+        background-color: $color_secondary;
+        color: $color_light;
 
-    &:hover {
-      background-color: $color_secondary;
-      color: $color_light;
-
-      .Project-actions {
-        button {
-          color: $color_light;
+        .Project-actions {
+          button {
+            color: $color_light;
+          }
         }
       }
     }
@@ -123,8 +114,8 @@ export default {
       height: 100%;
       top: 0;
       left: 0;
-      z-index: 5;
       cursor: pointer;
+      @include z-index(project-link);
     }
 
     .Project-content {
@@ -154,9 +145,9 @@ export default {
 
     .Project-actions {
       flex: 0 0 108px;
+
       button {
         position: relative;
-        z-index: 10;
         cursor: pointer;
         padding: 6px;
         border-radius: 50%;
@@ -166,11 +157,15 @@ export default {
         border: 1px solid $color_grey;
         margin-left: 4px;
         transition: 0.3s;
+        @include z-index(project-actions-button);
 
         &:hover {
           border: 1px solid $color_light;
           background-color: $color_light;
-          color: $color_secondary;
+
+          i {
+            color: $color_secondary;
+          }
         }
       }
     }

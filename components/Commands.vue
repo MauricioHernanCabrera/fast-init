@@ -1,9 +1,12 @@
 <template lang="pug">
   .Commands
-    .Command-item(v-for="command in getCommands" :key="command._id")
+    .Command-item(v-if="getCommands.length == 0")
+      .Command-content
+        h4 There no commands
+
+    .Command-item.hover(v-else v-for="command in getCommands" :key="command._id")
       .Command-content
         h4 {{command.program.name}} 
-        //- 
         p {{command.param}}
       
       .Command-actions
@@ -47,13 +50,15 @@ export default {
       border-bottom: 0;
     }
 
-    &:hover {
-      background-color: $color_secondary;
-      color: $color_light;
+    &.hover {
+      &:hover {
+        background-color: $color_secondary;
+        color: $color_light;
 
-      .Command-actions {
-        button {
-          color: $color_light;
+        .Command-actions {
+          button {
+            color: $color_light;
+          }
         }
       }
     }
@@ -64,8 +69,8 @@ export default {
       height: 100%;
       top: 0;
       left: 0;
-      z-index: 5;
       cursor: pointer;
+      @include z-index(command-link);
     }
 
     .Command-content {
@@ -83,7 +88,6 @@ export default {
       flex: 0 0 72px;
       button {
         position: relative;
-        z-index: 10;
         cursor: pointer;
         padding: 6px;
         border-radius: 50%;
@@ -93,11 +97,15 @@ export default {
         border: 1px solid $color_grey;
         margin-left: 4px;
         transition: 0.3s;
+        @include z-index(command-actions-button);
 
         &:hover {
           border: 1px solid $color_light;
           background-color: $color_light;
-          color: $color_secondary;
+
+          i {
+            color: $color_secondary;
+          }
         }
       }
     }

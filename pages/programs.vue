@@ -4,7 +4,7 @@
       template(slot="toolbar-items")
         button(@click="SET_DIALOG({ title: 'Create program', active: 'create-or-update' })")
           i.fas.fa-plus
-          | program
+          span program
     Card()
       Programs
 
@@ -45,7 +45,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['dialog'])
+    ...mapState(['dialog', 'projects'])
   },
 
   methods: {
@@ -54,7 +54,8 @@ export default {
       'CANCEL_DIALOG',
       'ADD_PROGRAM',
       'REMOVE_PROGRAM',
-      'UPDATE_PROGRAM'
+      'UPDATE_PROGRAM',
+      'SET_PROJECTS'
     ]),
 
     submitForm({ newValue, updateValue }) {
@@ -68,6 +69,13 @@ export default {
 
     deleteItem(item) {
       this.REMOVE_PROGRAM(item)
+      // const projectWithoutProgramDependency = this.projects.map(project => ({
+      //   ...project,
+      //   commands: project.commands.filter(
+      //     command => command.program == item._id
+      //   )
+      // }))
+      // this.SET_PROJECTS(projectWithoutProgramDependency)
     }
   }
 }

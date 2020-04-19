@@ -1,6 +1,10 @@
 <template lang="pug">
   .Programs
-    .Program-item(v-for="program in programs" :key="program._id")
+    .Program-item(v-if="programs.length == 0")
+      .Program-content
+        h4 There no programs
+    
+    .Program-item.hover(v-else v-for="program in programs" :key="program._id")
       .Program-content
         h4 {{program.name}}
         p {{program.url}}
@@ -44,17 +48,18 @@ export default {
     position: relative;
 
     &:last-child {
-      margin: 0;
       border-bottom: 0;
     }
 
-    &:hover {
-      background-color: $color_secondary;
-      color: $color_light;
+    &.hover {
+      &:hover {
+        background-color: $color_secondary;
+        color: $color_light;
 
-      .Program-actions {
-        button {
-          color: $color_light;
+        .Program-actions {
+          button {
+            color: $color_light;
+          }
         }
       }
     }
@@ -74,7 +79,6 @@ export default {
       flex: 0 0 72px;
       button {
         position: relative;
-        z-index: 10;
         cursor: pointer;
         padding: 6px;
         border-radius: 50%;
@@ -85,10 +89,14 @@ export default {
         margin-left: 4px;
         transition: 0.3s;
 
+        @include z-index(program-actions-button);
+
         &:hover {
           border: 1px solid $color_light;
           background-color: $color_light;
-          color: $color_secondary;
+          i {
+            color: $color_secondary;
+          }
         }
       }
     }

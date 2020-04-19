@@ -1,10 +1,10 @@
 <template lang="pug">
   div
-    Toolbar(:title="`Commands of ${project.name}`")
+    Toolbar(:title="`Commands of ${project && project.name? project.name : 'project'}`")
       template(slot="toolbar-items")
         button(@click="SET_DIALOG({ title: 'Create command', active: 'create-or-update' })")
           i.fas.fa-plus
-          | command
+          span command
     Card
       Commands
 
@@ -45,17 +45,51 @@ export default {
     FormDelete
   },
 
-  beforeDestroy() {
-    const projectUpdated = {
-      ...this.project,
-      commands: this.getCommands
+  data() {
+    return {
+      existProject: false
     }
+  },
 
-    this.UPDATE_PROJECT(projectUpdated)
+  mounted() {
+    const { project_id } = this.$route.query
+
+    const projectFound = this.projects.find(
+      project => project._id == project_id
+    )
+
+    this.existProject = projectFound ? true : false
+
+    if (projectFound) {
+      const isSame = projectFound._id === this.project._id
+
+      if (!isSame) {
+        const { commands, ...project } = JSON.parse(
+          JSON.stringify(projectFound)
+        )
+        this.SET_PROJECT(project)
+        this.SET_COMMANDS(commands)
+      }
+    } else {
+      this.$router.push('/')
+    }
+  },
+
+  beforeDestroy() {
+    if (this.existProject) {
+      const projectUpdated = {
+        ...this.project,
+        commands: this.getCommands
+      }
+
+      this.UPDATE_PROJECT(projectUpdated)
+      this.SET_PROJECT({})
+      this.SET_COMMANDS([])
+    }
   },
 
   computed: {
-    ...mapState(['project', 'dialog']),
+    ...mapState(['projects', 'project', 'dialog']),
     ...mapGetters(['getCommands'])
   },
 
@@ -66,7 +100,9 @@ export default {
       'ADD_COMMAND',
       'REMOVE_COMMAND',
       'UPDATE_COMMAND',
-      'UPDATE_PROJECT'
+      'UPDATE_PROJECT',
+      'SET_PROJECT',
+      'SET_COMMANDS'
     ]),
 
     submitForm({ newValue, updateValue }) {

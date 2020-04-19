@@ -2,7 +2,7 @@
   .Drawer
     .Drawer-container
       .Drawer-logo
-        img(src="/logo.png")
+        img(src="/images/logo.png")
         h1 Fast Init
 
 
@@ -41,7 +41,6 @@ export default {
   background-color: $color_primary;
   color: $color_light;
   min-height: 100vh;
-
   width: 64px;
   flex: 0 0 64px;
 
@@ -65,7 +64,6 @@ export default {
 
     img {
       width: 24px;
-      // transform: rotate(23deg);
     }
 
     h1 {

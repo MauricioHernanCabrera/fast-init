@@ -5,20 +5,17 @@ export default function(context) {
     const dataStore = JSON.parse(localStorage.getItem('store'))
 
     if (dataStore) {
-      if (dataStore.programs) store.commit('SET_PROGRAMS', dataStore.programs)
-      if (dataStore.projects) store.commit('SET_PROJECTS', dataStore.projects)
+      const { programs, projects, commands, project } = dataStore
+      if (programs) store.commit('SET_PROGRAMS', programs)
+      if (projects) store.commit('SET_PROJECTS', projects)
+      if (commands) store.commit('SET_COMMANDS', commands)
+      if (project) store.commit('SET_PROJECT', project)
     }
-    // const cart = store.$cookies.get('cart') || []
-    // store.commit('cart/SET_CART', cart)
+
+    store.commit('SET_LOADING_APP', false)
 
     store.subscribe(() => {
       localStorage.setItem('store', JSON.stringify(store.state))
-      // const cart = store.state.cart.cart
-
-      // store.$cookies.set('cart', JSON.parse(JSON.stringify(cart)), {
-      //   path: '/',
-      //   maxAge: 60 * 60 * 24 * 7
-      // })
     })
   }
 }

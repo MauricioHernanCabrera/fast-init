@@ -33,7 +33,7 @@ export default {
   color: $color_light;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  @include z-index(toolbar);
 
   .Toolbar-content {
     display: flex;
@@ -49,9 +49,8 @@ export default {
 
       i {
         font-size: 16px;
-        margin-right: 8px;
         cursor: pointer;
-        padding: 10px;
+        padding: 18px;
         padding-left: 0;
       }
     }
@@ -68,11 +67,24 @@ export default {
         font-size: 16px;
         font-weight: 700;
         height: 100%;
+        min-width: 64px;
+        display: flex;
+        justify-content: center;
 
         i {
           font-size: 14px;
           cursor: pointer;
-          margin-right: 8px;
+
+          @include breakpoint(lg) {
+            margin-right: 8px;
+          }
+        }
+
+        span {
+          display: none;
+          @include breakpoint(lg) {
+            display: block;
+          }
         }
       }
     }

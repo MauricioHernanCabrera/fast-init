@@ -48,7 +48,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  @include z-index(modal);
 
   .Modal-overlay {
     width: 100%;
@@ -56,13 +56,12 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 110;
     background-color: rgba(33, 33, 33, 0.46);
+    @include z-index(modal-overlay);
   }
 
   .Modal-container {
     position: relative;
-    z-index: 120;
     max-width: 600px;
     margin: 0 auto;
     border-radius: 2px;
@@ -74,6 +73,8 @@ export default {
     max-height: calc(100vh - 80px);
     background-color: $color_light;
     overflow-y: auto;
+
+    @include z-index(modal-container);
 
     .Modal-header {
       h4 {

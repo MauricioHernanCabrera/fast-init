@@ -1,4 +1,6 @@
 export const state = () => ({
+  loadingApp: true,
+
   programs: [],
 
   projects: [],
@@ -27,14 +29,20 @@ export const getters = {
   },
 
   getCommands(state) {
-    return state.commands.map(command => ({
-      ...command,
-      program: state.programs.find(program => program._id == command.program)
-    }))
+    return state.commands
+      .map(command => ({
+        ...command,
+        program: state.programs.find(program => program._id == command.program)
+      }))
+      .filter(command => command.program && command.program._id)
   }
 }
 
 export const mutations = {
+  SET_LOADING_APP(state, payload) {
+    state.loadingApp = payload
+  },
+
   SET_DIALOG(
     state,
     { data = {}, active = '', title = '', nameBtnSubmit = 'Accept' }
