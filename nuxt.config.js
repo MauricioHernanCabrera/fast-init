@@ -92,7 +92,7 @@ export default {
     ],
 
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/logo.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: page.favicon },
       {
         rel: 'stylesheet',
         href:
