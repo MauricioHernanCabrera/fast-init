@@ -1,8 +1,8 @@
 <template lang="pug">
   .Layout
-    .Layout-loader(v-if="loadingApp")
-      .lds-circle
-        div
+    //- .Layout-loader(v-if="loadingApp")
+    //-   .lds-circle
+    //-     div
     drawer.Layout-drawer
     nuxt.Layout-body
 </template>
