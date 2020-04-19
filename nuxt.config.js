@@ -1,5 +1,14 @@
 let FRONT_URL = ''
 
+const routerBase =
+  process.env.DEPLOY_ENV === 'GH_PAGES'
+    ? {
+        router: {
+          base: '/fast-init/'
+        }
+      }
+    : {}
+
 switch (process.env.NODE_ENV) {
   case 'production':
     FRONT_URL = 'https://mauriciohernancabrera.github.io/fast-init'
@@ -8,8 +17,6 @@ switch (process.env.NODE_ENV) {
     FRONT_URL = 'http://127.0.0.1:3000'
     break
 }
-
-console.log(process.env.NODE_ENV)
 
 const page = {
   title: 'Fast Init',
@@ -25,6 +32,8 @@ const page = {
 }
 
 export default {
+  ...routerBase,
+
   mode: 'universal',
   /*
    ** Headers of the page
@@ -111,10 +120,8 @@ export default {
    */
   plugins: [
     '@/plugins/vuelidate',
-    {
-      src: '@/plugins/keep-state',
-      mode: 'client'
-    }
+    { src: '@/plugins/keep-state', mode: 'client' },
+    { src: '~/plugins/ga.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -145,7 +152,7 @@ export default {
     name: page.title,
     short_name: page.short_name,
     lang: 'en-US',
-    start_url: '/',
+    start_url: '/fast-init',
     scope: '/',
     display: 'standalone',
     background_color: '#009ee0',
