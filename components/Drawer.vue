@@ -2,7 +2,7 @@
   .Drawer
     .Drawer-container
       .Drawer-logo
-        img(src="/images/logo.png")
+        img(:src="`${FRONT_URL}/images/logo.png`")
         h1 Fast Init
 
 
@@ -17,6 +17,7 @@
 export default {
   data() {
     return {
+      FRONT_URL: process.env.FRONT_URL,
       routes: [
         {
           name: 'projects',
