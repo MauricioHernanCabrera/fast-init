@@ -35,10 +35,10 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_DIALOG: (
+  SET_DIALOG(
     state,
     { data = {}, active = '', title = '', nameBtnSubmit = 'Accept' }
-  ) => {
+  ) {
     state.dialog.data = JSON.parse(JSON.stringify(data))
     state.dialog.nameBtnSubmit = nameBtnSubmit
     state.dialog.title = title

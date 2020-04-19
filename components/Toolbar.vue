@@ -27,11 +27,13 @@ export default {
 .Toolbar {
   background-color: $color_primary;
   height: 64px;
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
   padding: 0 16px;
   color: $color_light;
-  // border-left: 1px solid $color_light;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
   .Toolbar-content {
     display: flex;
@@ -41,7 +43,7 @@ export default {
     height: 100%;
 
     .Toolbar-title {
-      font-size: 16px;
+      font-size: 20px;
       display: flex;
       align-items: center;
 
