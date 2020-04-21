@@ -152,8 +152,8 @@ export default {
     name: page.title,
     short_name: page.short_name,
     lang: 'en-US',
-    start_url: '/fast-init',
-    scope: '/',
+    start_url: '/',
+    scope: '/fast-init',
     display: 'standalone',
     background_color: '#009ee0',
     theme_color: '#006e9c'
