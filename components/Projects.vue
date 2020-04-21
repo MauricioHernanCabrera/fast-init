@@ -14,13 +14,16 @@
             | {{command.program.name}}
       
       .Project-actions
-        button(title="copy clipboard" @click="copyClipboard(project.commands)")
+        //- button(title="Download .bat" @click="downloadBat(project.commands)")
+        //-   i.fas.fa-download
+
+        button(title="Copy clipboard" @click="copyClipboard(project.commands)")
           i.fas.fa-clipboard
 
-        button(title="edit project" @click="SET_DIALOG({ title: 'Edit project', nameBtnSubmit: 'Edit', active: 'create-or-update', data: project })")
+        button(title="Edit project" @click="SET_DIALOG({ title: 'Edit project', nameBtnSubmit: 'Edit', active: 'create-or-update', data: project })")
           i.fas.fa-pen
 
-        button(title="remove project" @click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: project._id, name: project.name } })")
+        button(title="Remove project" @click="SET_DIALOG({ title: 'Delete project', nameBtnSubmit: 'Delete', active: 'delete', data: { _id: project._id, name: project.name } })")
           i.fas.fa-trash-alt
 
     textarea(
@@ -64,7 +67,7 @@ export default {
             `${acum} "${program.url}" ${param} &&`,
           ''
         )
-        .slice(1, -4)
+        .slice(1, -3)
 
       const json = str
       this.clipboard = json
@@ -74,6 +77,25 @@ export default {
         document.execCommand('copy')
       })
     }
+
+    // downloadBat() {
+    //   const text = `@echo off\n"c:\Users\algui\AppData\Local\Programs\Microsoft VS Code\bin\code" "C:\Users\algui\Desktop\hernan\geco\geco-back"\nexit`
+    //   const filename = `holamundo-${Date.now()}.bat`
+    //   const element = document.createElement('a')
+    //   element.setAttribute(
+    //     'href',
+    //     'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+    //   )
+    //   element.setAttribute('download', filename)
+
+    //   element.style.display = 'none'
+    //   document.body.appendChild(element)
+
+    //   element.click()
+
+    //   document.body.removeChild(element)
+    //   console.log('.bat')
+    // }
   }
 }
 </script>
@@ -142,6 +164,7 @@ export default {
     }
 
     .Project-actions {
+      // flex: 0 0 144px;
       flex: 0 0 108px;
 
       button {
