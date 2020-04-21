@@ -59,13 +59,11 @@ export default {
       )
 
       const str = commandsFiltered
-        .reduce((acum, command) => {
-          return `${acum} "${command.program.url}" ${
-            command.param && command.param.length != 0
-              ? `"${command.param}" &&`
-              : '&&'
-          } `
-        }, '')
+        .reduce(
+          (acum, { program, param = '' }) =>
+            `${acum} "${program.url}" ${param} &&`,
+          ''
+        )
         .slice(1, -4)
 
       const json = str

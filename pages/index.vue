@@ -5,7 +5,7 @@
         button(@click="SET_DIALOG({ title: 'Create project', active: 'create-or-update' })")
           i.fas.fa-plus
           span project
-    Card(title="Projects")
+    Card()
       Projects
     
     FormProject(
